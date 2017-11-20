@@ -26,7 +26,12 @@ CoV=0.1;
     prognosisData.RUL.true=prognosisData.EOL.true - prognosisData.time;
 %		.RUL.values = (N x t) RUL prediction values at each prediction
 %			time.
-    prognosisData.RUL.values=prognosisData.EOL.values - prognosisData.time;
+    prognosisData.RUL.values=ones(N_sam,Time_Max)
+    for i = 1:N_sam
+        for j=1:Time_Max
+            prognosisData.RUL.values(i,j)=prognosisData.EOL.values(i,j) - prognosisData.time(j);
+        end
+    end
 %		.RUL.weights = (N x t) RUL prediction weights at each prediction
 %			time.
     prognosisData.RUL.weights=prognosisData.EOL.weights;
