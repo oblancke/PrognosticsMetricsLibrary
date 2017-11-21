@@ -37,9 +37,9 @@ import PrognosticsMetrics.*;
 
 % set up default options
 options = struct('boxFill',[.4 .5 .6],'coneFill',[.95 .95 .95],'width',1,...
-	'timeUnits','s','showResults',1,'xR',-3,'yR',10,'xB',-3,'yB',5,...
-	'printSummary',0,'FontName','Times','textColor',[0 0 0],'lineColor',[0 0 0],...
-	'style','tufte','MarkerSize',3,'FontSize',10,'UTParams',[],'completeLegend',0,...
+	'timeUnits','s','showResults',1,'xR',-0.15,'yR',0.5,'xB',-0.15,'yB',0.9,...
+	'printSummary',1,'FontName','Times','textColor',[0 0 0],'lineColor',[0 0 0],...
+	'style','tukey','MarkerSize',3,'FontSize',10,'UTParams',[],'completeLegend',0,...
 	'name','RUL');
 
 if nargin>3
@@ -184,21 +184,21 @@ switch options.style
 	case 'tukey'
 		
 		% make the box
-		h = patch([k-width/2 k+width/2 k+width/2 k-width/2],[Q(1) Q(1) Q(3) Q(3)],fillColor);
+		h = patch([k-width/6 k+width/6 k+width/6 k-width/6],[Q(1) Q(1) Q(3) Q(3)],fillColor);
 		boxhandles = h;
-		h = line([k-width/2 k+width/2],[Q(2) Q(2)]);
+		h = line([k-width/6 k+width/6],[Q(2) Q(2)]);
 		set(h,'Color',options.lineColor);
 		
 		% mark the mean
 		h = line(k,mean(Y));
-		set(h,'LineStyle','.','Marker','o','Color',options.lineColor,'MarkerFaceColor',options.lineColor);
+		set(h,'LineStyle','-','Marker','o','Color',options.lineColor,'MarkerFaceColor',options.lineColor);
 		boxhandles(end+1) = h;
 		
 		% plot confidence line (whiskers)
 		h = line([k k],[percentile(Y,.05) percentile(Y,.95)]);
 		set(h,'Color',options.lineColor);
 		h = line([k k],[percentile(Y,.05) percentile(Y,.95)]);
-		set(h,'LineStyle','.','Marker','+','Color',options.lineColor);
+		set(h,'LineStyle','-','Marker','+','Color',options.lineColor);
 		boxhandles(end+1) = h;
 		upperMark = [k percentile(Y,.95)];
 		
@@ -236,7 +236,6 @@ switch options.style
 		upperMark = [k max(Y)];
 		boxhandles = h(1);
 end
-
 
 
 
